@@ -119,8 +119,8 @@ class CoupleEvent(object):
             else:
                 one_line["All Day Event"] = all_day_event
                 one_line["Private"] = private
-                one_line["Start Time"] = "00:00 PM"
-                one_line["End Time"] = "00:00 AM"
+                one_line["Start Time"] = "00:00 AM"
+                one_line["End Time"] = "00:00 PM"
                 if event_name in event_details:
                     event_info = event_details[event_name]
                     for key, value in event_info.items():

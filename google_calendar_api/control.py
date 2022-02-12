@@ -63,8 +63,6 @@ class CalendarControl:
         print("created event")
         print("id: ", event_result["id"])
         print("summary: ", event_result["summary"])
-        print("starts at: ", event_result["start"]["dateTime"])
-        print("ends at: ", event_result["end"]["dateTime"])
         return event_result
 
     def _update_dict(self, base, new):

@@ -36,8 +36,9 @@ GOOGLE_CALENDER_COLS = [
     "Private",
 ]
 
+import datetime
 
-DateToStr = lambda x: x.strftime("%m/%d/%Y")
+DateToStr = lambda x: x.strftime("%m/%d/%Y") if isinstance(x, (datetime.datetime,)) else x
 ToStr = lambda x: str(x)
 ToBool = lambda x: bool(x)
 
