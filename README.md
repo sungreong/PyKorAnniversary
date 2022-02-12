@@ -1,7 +1,12 @@
 # PyKorAnniversary
 파이썬을 활용하여 한국 기념일 관리하기
 
+# Install
 
+```
+git clone https://github.com/sungreong/PyKorAnniversary.git
+pip install -r requirements.txt
+```
 # Feature 
 
 - [x]  한국 기념일 데이터
