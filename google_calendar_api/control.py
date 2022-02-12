@@ -49,6 +49,7 @@ UPDATE_FUNC_ARGUMENT = dict(
 )
 
 DELETE_FUNC_ARGUMENT = dict(calendarId="primary", eventId=None, sendNotifications=None, sendUpdates=None)
+from datetime import datetime , timedelta
 
 
 class CalendarControl:
@@ -59,11 +60,17 @@ class CalendarControl:
         insert_args = self._update_dict(INSERT_FUNC_ARGUMENT, insert_func_dict)
         insert_args["calendarId"] = calendarId
         insert_args["body"] = body
-        event_result = self.service.events().insert(**insert_args).execute()
-        print("created event")
-        print("id: ", event_result["id"])
-        print("summary: ", event_result["summary"])
-        return event_result
+
+        if self.check_event(body) :
+            event_result = self.service.events().insert(**insert_args).execute()
+            print("created event")
+            print("id: ", event_result["id"])
+            print("summary: ", event_result["summary"])
+            return event_result
+        else :
+            print("중복되는 일정이 존재합니다")
+            return None 
+        
 
     def _update_dict(self, base, new):
         base = deepcopy(base)
@@ -115,3 +122,23 @@ class CalendarControl:
             self.service.events().delete(**delete_args).execute()
         except googleapiclient.errors.HttpError:
             print("Failed to delete event")
+
+    def check_event(self,  body ) :
+        ## 기존 일정과 새로운 일정간의 중복 여부 체크
+        if "date" in body["start"]:
+            check_date = datetime.strptime(body["start"]["date"], "%Y-%m-%d")
+        else:
+            check_date = datetime.fromisoformat(body["start"]["dateTime"])
+        check_date = check_date - timedelta(days=1)
+        list_dict = dict(timeMin=check_date.isoformat() + "Z", singleEvents=True, orderBy="startTime", maxResults=10)
+        events = self.get_event_list(calendarId="primary", list_func_dict=list_dict)
+        items = events["items"]
+        if len(items) == 0:
+            return True 
+        else:
+            subjects = [item["summary"] for item in items]
+            if body["summary"] in subjects:
+                return False 
+            else :
+                return True
+        

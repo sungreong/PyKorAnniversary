@@ -84,29 +84,19 @@ if __name__ == "__main__":
             "overrides": [{"method": "email", "minutes": 60 * 24 * 2}, {"method": "popup", "minutes": 60 * 24}],
             "useDefault": False,
         }
-        ## 기존 일정과 새로운 일정간의 중복 여부 체크
-        if "date" in body["start"]:
-            check_date = datetime.strptime(body["start"]["date"], "%Y-%m-%d")
-        else:
-            check_date = datetime.fromisoformat(body["start"]["dateTime"])
-        check_date = check_date - timedelta(days=1)
-        list_dict = dict(timeMin=check_date.isoformat() + "Z", singleEvents=True, orderBy="startTime", maxResults=10)
-        events = CC.get_event_list(calendarId="primary", list_func_dict=list_dict)
-        items = events["items"]
-        if len(items) == 0:
-            pass
-        else:
-            subjects = [item["summary"] for item in items]
-            if body["summary"] in subjects:
-                continue
+        
         ## 캘린더에 등록
         event_result = CC.create_event(calendarId="primary", body=body)
-        event_result_list.append(event_result)
+        if event_result is None :
+            continue 
+        else :
+            event_result_list.append(event_result)
     else:
         print("캘린더에 등록하였습니다.")
         with open("./event_result.pkl", "wb") as wb:
             pickle.dump(event_result_list, wb)
         for i in event_result_list :
+            
             event_id = i["id"]
             CC.delete_event(calendarId="primary",eventId=event_id)
         else :
