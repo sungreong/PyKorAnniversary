@@ -130,7 +130,7 @@ dmypy.json
 
 
 # custom 
-.credentails.json
+credentails.json
 token.pickle
 event_result.pkl
 make_code.ipynb 

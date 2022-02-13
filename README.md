@@ -17,7 +17,7 @@ pip install -r requirements.txt
 
 - [x] Dash를 사용하여 UI 구성
 
-![UI](./output.png)
+![UI](./assets/output.png)
 
 # Deploy
 
