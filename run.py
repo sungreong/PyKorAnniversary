@@ -1,13 +1,13 @@
 import sys
 
-sys.path.append("./")
+sys.path.append("./src")
 
 import pandas as pd
 from datetime import datetime, timedelta
-from google_calendar_api.control import CalendarControl
+from src.google_calendar_api.control import CalendarControl
 from datetime import datetime
 import pickle
-from event import CoupleEvent
+from src.event import CoupleEvent
 from datetime import datetime
 
 

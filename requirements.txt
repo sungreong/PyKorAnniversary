@@ -1,1 +1,5 @@
+dash_extensions==0.0.69
+google_api_python_client==2.37.0
+google_auth_oauthlib==0.4.6
 pandas==1.4.0
+protobuf==3.19.4

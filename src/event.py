@@ -1,16 +1,20 @@
 from datetime import datetime
 from datetime import timedelta
-from constant import EVENT_DAYS, EVENT_COLS
+
 import pandas as pd
 from typing import Mapping
-from constant import GOOGLE_CALENDER_COLS, GOOGLE_CALENDER_FUNCS, GOOGLE_CALENDER_MAPS
+import os, sys
+
+dirname = os.path.dirname(__file__)
+sys.path.append(dirname)
+from constant import GOOGLE_CALENDER_COLS, GOOGLE_CALENDER_FUNCS, GOOGLE_CALENDER_MAPS, EVENT_DAYS, EVENT_COLS
 
 
 class CoupleEvent(object):
     def __init__(self, date_of_dating=None):
-        if date_of_dating is None :
+        if date_of_dating is None:
             pass
-        else :
+        else:
             self.date_of_dating = self._get_date_to_str(date_of_dating)
         self.events = pd.DataFrame(EVENT_DAYS, columns=EVENT_COLS)
         self.events = self._transform_date(self.events)
